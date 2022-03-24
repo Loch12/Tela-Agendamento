@@ -8,7 +8,7 @@
 import UIKit
 
 class InitialViewController: UIViewController {
-
+  //MARK: -
   lazy var confirmationButton: UIButton = {
     let button = UIButton()
     button.translatesAutoresizingMaskIntoConstraints = false
@@ -20,24 +20,29 @@ class InitialViewController: UIViewController {
     button.backgroundColor = #colorLiteral(red: 0.114436962, green: 0.7574731846, blue: 0.3423004705, alpha: 1)
     return button
   }()
-
+  
+  //MARK: - Override Methods
   override func viewDidLoad() {
     super.viewDidLoad()
+    setupView()
+  }
+  
+  //MARK: - Methods
+  func setupView(){
     view.backgroundColor = .white
     view.addSubview(confirmationButton)
     applyConstraints()
   }
-
+  
   func applyConstraints() {
-    let confirmationButtonConstraints = [
+    NSLayoutConstraint.activate([
       confirmationButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -50),
       confirmationButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
       confirmationButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
       confirmationButton.heightAnchor.constraint(equalToConstant: 50)
-    ]
-    NSLayoutConstraint.activate(confirmationButtonConstraints)
+    ])
   }
-
+  
   @objc private func buttonPressed(_ sender: UIButton) {
     self.confirmationButton.setTitle("Carregando...", for: .normal)
     DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
@@ -51,17 +56,17 @@ class InitialViewController: UIViewController {
       self.confirmationButton.setTitle("Confirmar Agendamento", for: .normal)
     }
   }
-
+  
   func setupNextView(nextView: ViewController, model: ReturnViewModel) {
     let informationLabel = InformationView(returnModel: model)
     let informationView = ExpandableView(description: "O que apresentar no dia", icon: "ic_clipboard_check", isHidden: false, modelLabel: informationLabel)
-
+    
     let personalDataLabel = PersonalDataView(returnModel: model)
     let personalDataView = ExpandableView(description: "Dados pessoais", icon: "ic_clipboard_check", isHidden: true, modelLabel: personalDataLabel)
-
+    
     let localizationLabel = LocalizationView(returnModel: model)
     let localizationView = ExpandableView(description: "Local do serviço", icon: "ic_map_marker", isHidden: true, modelLabel: localizationLabel)
-
+    
     nextView.informationView = informationView
     nextView.localizationView = localizationView
     nextView.personalDataView = personalDataView

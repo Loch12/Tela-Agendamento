@@ -10,11 +10,13 @@ import UIKit
 
 
 class LocalizationView: UIView {
-  var local: String = ""
-  var cell: String = ""
-  var cep: String = ""
-  var address: String = ""
-
+  //MARK: - Properties
+  var local = String()
+  var cell = String()
+  var cep = String()
+  var address = String()
+  
+  //MARK: - Methods
   lazy var localField: UILabel = {
     let label = UILabel()
     label.text = "Local: "
@@ -23,7 +25,7 @@ class LocalizationView: UIView {
     label.translatesAutoresizingMaskIntoConstraints = false
     return label
   }()
-
+  
   lazy var cellField: UILabel = {
     let label = UILabel()
     label.text = "Telefone: "
@@ -32,7 +34,7 @@ class LocalizationView: UIView {
     label.translatesAutoresizingMaskIntoConstraints = false
     return label
   }()
-
+  
   lazy var cepField: UILabel = {
     let label = UILabel()
     label.text = "CEP: "
@@ -41,7 +43,7 @@ class LocalizationView: UIView {
     label.translatesAutoresizingMaskIntoConstraints = false
     return label
   }()
-
+  
   lazy var addressField: UILabel = {
     let label = UILabel()
     label.text = "Endereço: "
@@ -50,7 +52,7 @@ class LocalizationView: UIView {
     label.translatesAutoresizingMaskIntoConstraints = false
     return label
   }()
-
+  
   lazy var localValue: UILabel = {
     let label = UILabel()
     label.text = self.local
@@ -58,7 +60,7 @@ class LocalizationView: UIView {
     label.translatesAutoresizingMaskIntoConstraints = false
     return label
   }()
-
+  
   lazy var cellValue: UILabel = {
     let label = UILabel()
     label.text = self.cell
@@ -66,7 +68,7 @@ class LocalizationView: UIView {
     label.translatesAutoresizingMaskIntoConstraints = false
     return label
   }()
-
+  
   lazy var cepValue: UILabel = {
     let label = UILabel()
     label.text = self.cep
@@ -74,7 +76,7 @@ class LocalizationView: UIView {
     label.translatesAutoresizingMaskIntoConstraints = false
     return label
   }()
-
+  
   lazy var addressValue: UILabel = {
     let label = UILabel()
     label.text = self.address
@@ -83,11 +85,12 @@ class LocalizationView: UIView {
     label.translatesAutoresizingMaskIntoConstraints = false
     return label
   }()
-
+  
+  //MARK: - Override Methods
   override init(frame: CGRect){
     super.init(frame: CGRect())
   }
-
+  
   init(returnModel: ReturnViewModel) {
     super.init(frame: CGRect())
     self.local = returnModel.local
@@ -97,7 +100,12 @@ class LocalizationView: UIView {
     self.translatesAutoresizingMaskIntoConstraints = false
     self.setupView()
   }
-
+  
+  required init?(coder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+  
+  //MARK: - Methods
   func setupView() {
     addSubview(localField)
     addSubview(localValue)
@@ -108,75 +116,59 @@ class LocalizationView: UIView {
     addSubview(addressField)
     addSubview(addressValue)
     applyConstraints()
-
+    
   }
-
+  
   func applyConstraints() {
-//
-    let localFieldConstraints = [
+    NSLayoutConstraint.activate([
       localField.topAnchor.constraint(equalTo: topAnchor),
       localField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
       localField.heightAnchor.constraint(equalToConstant: 20)
-    ]
-
-    let localValueConstraints = [
+    ])
+    
+    NSLayoutConstraint.activate([
       localValue.topAnchor.constraint(equalTo: topAnchor),
       localValue.leadingAnchor.constraint(equalTo: localField.trailingAnchor),
       localValue.heightAnchor.constraint(equalToConstant: 20)
-    ]
-
-    let cellFieldConstraints = [
+    ])
+    
+    NSLayoutConstraint.activate([
       cellField.topAnchor.constraint(equalTo: localField.bottomAnchor, constant: 10),
       cellField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
       cellField.heightAnchor.constraint(equalToConstant: 20)
-    ]
-
-    let cellValueConstraints = [
+    ])
+    
+    NSLayoutConstraint.activate([
       cellValue.topAnchor.constraint(equalTo: localField.bottomAnchor, constant: 10),
       cellValue.leadingAnchor.constraint(equalTo: cellField.trailingAnchor),
       cellValue.heightAnchor.constraint(equalToConstant: 20)
-    ]
-
-    let cepFieldConstraints = [
+    ])
+    
+    NSLayoutConstraint.activate([
       cepField.topAnchor.constraint(equalTo: cellField.bottomAnchor, constant: 10),
       cepField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
       cepField.heightAnchor.constraint(equalToConstant: 20)
-    ]
-
-    let cepValueConstraints = [
+    ])
+    
+    NSLayoutConstraint.activate([
       cepValue.topAnchor.constraint(equalTo: cellField.bottomAnchor, constant: 10),
       cepValue.leadingAnchor.constraint(equalTo: cepField.trailingAnchor),
       cepValue.heightAnchor.constraint(equalToConstant: 20)
-    ]
-
-    let addressFieldConstraints = [
+    ])
+    
+    NSLayoutConstraint.activate([
       addressField.topAnchor.constraint(equalTo: cepField.bottomAnchor, constant: 10),
       addressField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
       addressField.heightAnchor.constraint(equalToConstant: 20)
-    ]
-
-    let addressValueConstraints = [
+    ])
+    
+    NSLayoutConstraint.activate([
       addressValue.topAnchor.constraint(equalTo: cepField.bottomAnchor, constant: 10),
       addressValue.leadingAnchor.constraint(equalTo: addressField.trailingAnchor),
       addressValue.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20)
-    ]
-
+    ])
+    
     bottomAnchor.constraint(equalTo: addressValue.bottomAnchor).isActive = true
-
-    NSLayoutConstraint.activate(localFieldConstraints)
-    NSLayoutConstraint.activate(localValueConstraints)
-    NSLayoutConstraint.activate(cellFieldConstraints)
-    NSLayoutConstraint.activate(cellValueConstraints)
-    NSLayoutConstraint.activate(cepFieldConstraints)
-    NSLayoutConstraint.activate(cepValueConstraints)
-    NSLayoutConstraint.activate(addressFieldConstraints)
-    NSLayoutConstraint.activate(addressValueConstraints)
-
-
-
   }
-  required init?(coder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
-  }
-
+  
 }

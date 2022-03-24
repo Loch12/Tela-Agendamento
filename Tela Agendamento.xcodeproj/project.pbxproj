@@ -74,11 +74,10 @@
 		46146B8F27E10BE400D3C5A1 /* Tela Agendamento */ = {
 			isa = PBXGroup;
 			children = (
-				46AF7F0727E8473C00D6433D /* Controllers */,
 				46AF7F0627E8472700D6433D /* ViewModel */,
 				46AF7F0527E8472000D6433D /* Model */,
 				46AF7F0427E8470700D6433D /* View */,
-				46AF7F0327E846F100D6433D /* Requests */,
+				46AF7F0327E846F100D6433D /* API Service */,
 				46146B9027E10BE400D3C5A1 /* AppDelegate.swift */,
 				46146B9227E10BE400D3C5A1 /* SceneDelegate.swift */,
 				46146B9927E10BE600D3C5A1 /* Assets.xcassets */,
@@ -88,18 +87,19 @@
 			path = "Tela Agendamento";
 			sourceTree = "<group>";
 		};
-		46AF7F0327E846F100D6433D /* Requests */ = {
+		46AF7F0327E846F100D6433D /* API Service */ = {
 			isa = PBXGroup;
 			children = (
 				46AF7EFB27E83DF500D6433D /* Teste.json */,
 				46AF7EFF27E8400B00D6433D /* Requests.swift */,
 			);
-			path = Requests;
+			path = "API Service";
 			sourceTree = "<group>";
 		};
 		46AF7F0427E8470700D6433D /* View */ = {
 			isa = PBXGroup;
 			children = (
+				46AF7F0727E8473C00D6433D /* Controllers */,
 				4665080827E2A41300E43E54 /* ExpandableView.swift */,
 				464EAF7827E31B3000B5EE70 /* Divider.swift */,
 				464EAF7E27E3DCC100B5EE70 /* PersonalDataView.swift */,

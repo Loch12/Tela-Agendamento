@@ -8,6 +8,7 @@
 import Foundation
 
 struct ReturnViewModel {
+  //MARK: - Properties
   let name: String
   let cpf: String
   let birthday: String
@@ -19,7 +20,6 @@ struct ReturnViewModel {
   let nomeVacina: String
   let recomendacao: String
   let date: String
-
 
   var dateFormatted: String {
     return getFormattedDate(inputFormat: "yyyy-MM-dd HH:mm:ss", outputFormat: "dd/MM/yyyy", insertDate: self.date)
@@ -37,6 +37,7 @@ struct ReturnViewModel {
     return "\(self.rua), \(self.numero) - \(self.bairro), \(self.cidade) - \(self.cep)"
   }
 
+  //MARK: - Override Methods
   init(returnModel: ReturnModel){
     self.name = returnModel.nome
     self.cpf = returnModel.cpf
@@ -56,6 +57,7 @@ struct ReturnViewModel {
     self.recomendacao = returnModel.servico.orientacoes
   }
 
+  //MARK: - Methods
   func getFormattedDate(inputFormat: String, outputFormat: String, insertDate: String) -> String {
     let dateFormatterGet = DateFormatter()
     dateFormatterGet.dateFormat = inputFormat
