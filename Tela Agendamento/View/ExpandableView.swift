@@ -7,9 +7,6 @@
 
 import UIKit
 
-
-fileprivate let buttonSize: CGFloat = 56
-
 class ExpandableView: UIView {
   //MARK: - Properties
   var iconName = String()

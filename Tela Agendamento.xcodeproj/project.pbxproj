@@ -99,12 +99,12 @@
 		46AF7F0427E8470700D6433D /* View */ = {
 			isa = PBXGroup;
 			children = (
-				46AF7F0727E8473C00D6433D /* Controllers */,
 				4665080827E2A41300E43E54 /* ExpandableView.swift */,
 				464EAF7827E31B3000B5EE70 /* Divider.swift */,
 				464EAF7E27E3DCC100B5EE70 /* PersonalDataView.swift */,
 				46AF7F0827E8520900D6433D /* LocalizationView.swift */,
 				46AF7F0A27E8552300D6433D /* InformationView.swift */,
+				46AF7F0727E8473C00D6433D /* Controllers */,
 			);
 			path = View;
 			sourceTree = "<group>";
