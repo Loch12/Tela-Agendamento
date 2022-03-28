@@ -47,10 +47,8 @@ class InitialViewController: UIViewController {
     self.confirmationButton.setTitle("Carregando...", for: .normal)
     DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
       let newViewController = ViewController()
-      if let model = Requests.loadJson(filename: "Teste"){
-        let viewModel = ReturnViewModel(returnModel: model)
-        self.setupNextView(nextView: newViewController, model: viewModel)
-      }
+      let returnViewModel = ReturnViewModel(filename: "Teste")
+      self.setupNextView(nextView: newViewController, model: returnViewModel)
       newViewController.isModalInPresentation = true
       self.navigationController?.present(newViewController, animated: true, completion: nil)
       self.confirmationButton.setTitle("Confirmar Agendamento", for: .normal)
@@ -58,18 +56,6 @@ class InitialViewController: UIViewController {
   }
   
   func setupNextView(nextView: ViewController, model: ReturnViewModel) {
-    let informationLabel = InformationView(returnModel: model)
-    let informationView = ExpandableView(description: "O que apresentar no dia", icon: "ic_clipboard_check", isHidden: false, modelLabel: informationLabel)
-    
-    let personalDataLabel = PersonalDataView(returnModel: model)
-    let personalDataView = ExpandableView(description: "Dados pessoais", icon: "ic_clipboard_check", isHidden: true, modelLabel: personalDataLabel)
-    
-    let localizationLabel = LocalizationView(returnModel: model)
-    let localizationView = ExpandableView(description: "Local do serviço", icon: "ic_map_marker", isHidden: true, modelLabel: localizationLabel)
-    
-    nextView.informationView = informationView
-    nextView.localizationView = localizationView
-    nextView.personalDataView = personalDataView
     nextView.returnViewModel = model
   }
 }

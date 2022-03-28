@@ -46,9 +46,6 @@ class ExpandableView: UIView {
   lazy var headView: UIView = {
     let view = UIView()
     view.translatesAutoresizingMaskIntoConstraints = false
-    view.addSubview(iconImage)
-    view.addSubview(titleLabel)
-    view.addSubview(expandButton)
     return view
   }()
   
@@ -71,8 +68,6 @@ class ExpandableView: UIView {
     let stackView = UIStackView()
     stackView.translatesAutoresizingMaskIntoConstraints = false
     stackView.axis = .vertical
-    stackView.addArrangedSubview(headView)
-    stackView.addArrangedSubview(extensionView)
     return stackView
   }()
   
@@ -99,6 +94,12 @@ class ExpandableView: UIView {
   func setupView() {
     addSubview(containerStackView)
     extensionView.addSubview(contentView)
+    containerStackView.addArrangedSubview(headView)
+    containerStackView.addArrangedSubview(extensionView)
+
+    headView.addSubview(iconImage)
+    headView.addSubview(titleLabel)
+    headView.addSubview(expandButton)
     contentView.translatesAutoresizingMaskIntoConstraints = false
     iconImage.image = UIImage(named: iconName)
     titleLabel.text = viewName

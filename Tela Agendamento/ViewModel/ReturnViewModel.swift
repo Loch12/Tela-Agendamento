@@ -7,19 +7,24 @@
 
 import Foundation
 
-struct ReturnViewModel {
+class ReturnViewModel {
   //MARK: - Properties
-  let name: String
-  let cpf: String
-  let birthday: String
-  let cell: String
-  let local: String
-  let localCell: String
-  let localCep: String
-  let rua, numero, bairro, complemento, cidade, cep: String
-  let nomeVacina: String
-  let recomendacao: String
-  let date: String
+  var name = String()
+  var cpf = String()
+  var birthday = String()
+  var cell = String()
+  var local = String()
+  var localCell = String()
+  var localCep = String()
+  var rua = String()
+  var numero = String()
+  var bairro = String()
+  var complemento = String()
+  var cidade = String()
+  var cep = String()
+  var nomeVacina = String()
+  var recomendacao = String()
+  var date = String()
 
   var dateFormatted: String {
     return getFormattedDate(inputFormat: "yyyy-MM-dd HH:mm:ss", outputFormat: "dd/MM/yyyy", insertDate: self.date)
@@ -38,23 +43,8 @@ struct ReturnViewModel {
   }
 
   //MARK: - Override Methods
-  init(returnModel: ReturnModel){
-    self.name = returnModel.nome
-    self.cpf = returnModel.cpf
-    self.birthday = returnModel.data_nascimento
-    self.date = returnModel.data
-    self.cell = returnModel.telefone
-    self.local = returnModel.unidade.nome
-    self.localCell = returnModel.unidade.telefone ?? ""
-    self.localCep = returnModel.unidade.endereco.cep
-    self.rua = returnModel.unidade.endereco.logradouro
-    self.numero = returnModel.unidade.endereco.numero
-    self.bairro = returnModel.unidade.endereco.bairro
-    self.complemento = returnModel.unidade.endereco.complemento
-    self.cidade = returnModel.unidade.endereco.cidade
-    self.cep = returnModel.unidade.endereco.cep
-    self.nomeVacina = returnModel.servico.nome
-    self.recomendacao = returnModel.servico.orientacoes
+  init(filename: String){
+    fetchData(filename: filename)
   }
 
   //MARK: - Methods
@@ -71,6 +61,39 @@ struct ReturnViewModel {
       print("There was an error decoding the string")
     }
     return insertDate
+  }
+
+  func fetchData(filename fileName: String) {
+      if let url = Bundle.main.url(forResource: fileName, withExtension: "json") {
+          do {
+              let data = try Data(contentsOf: url)
+              let decoder = JSONDecoder()
+              let jsonData = try decoder.decode(ReturnModel.self, from: data)
+            loadJson(model: jsonData)
+
+          } catch {
+              print("error:\(error)")
+          }
+      }
+  }
+
+  func loadJson(model: ReturnModel) {
+    self.name = model.nome
+    self.cpf = model.cpf
+    self.birthday = model.data_nascimento
+    self.date = model.data
+    self.cell = model.telefone
+    self.local = model.unidade.nome
+    self.localCell = model.unidade.telefone ?? ""
+    self.localCep = model.unidade.endereco.cep
+    self.rua = model.unidade.endereco.logradouro
+    self.numero = model.unidade.endereco.numero
+    self.bairro = model.unidade.endereco.bairro
+    self.complemento = model.unidade.endereco.complemento
+    self.cidade = model.unidade.endereco.cidade
+    self.cep = model.unidade.endereco.cep
+    self.nomeVacina = model.servico.nome
+    self.recomendacao = model.servico.orientacoes
   }
 }
 
