@@ -164,7 +164,7 @@ class LocalizationView: UIView {
     
     NSLayoutConstraint.activate([
       addressValue.topAnchor.constraint(equalTo: cepField.bottomAnchor, constant: 10),
-      addressValue.leadingAnchor.constraint(equalTo: addressField.trailingAnchor),
+      addressValue.leadingAnchor.constraint(equalTo: addressField.trailingAnchor, constant: 1),
       addressValue.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20)
     ])
     
