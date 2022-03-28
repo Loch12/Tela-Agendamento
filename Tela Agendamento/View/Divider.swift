@@ -22,7 +22,7 @@ class Divider: UIView {
   //MARK: - Methods
   func applyConstraints() {
     translatesAutoresizingMaskIntoConstraints = false
-    heightAnchor.constraint(equalToConstant: 0.5).isActive = true
+    heightAnchor.constraint(equalToConstant: 1).isActive = true
     
   }
 }

@@ -11,9 +11,14 @@ class ViewController: UIViewController {
   //MARK: - Properties
   var returnViewModel: ReturnViewModel!
   
-  var informationView: ExpandableView!
-  var personalDataView: ExpandableView!
-  var localizationView: ExpandableView!
+  lazy var informationLabel = InformationView(returnModel: returnViewModel)
+  lazy var informationView = ExpandableView(description: "O que apresentar no dia", icon: "ic_clipboard_check", isHidden: false, modelLabel: informationLabel)
+
+  lazy var personalDataLabel = PersonalDataView(returnModel: returnViewModel)
+  lazy var personalDataView = ExpandableView(description: "Dados pessoais", icon: "ic_clipboard_check", isHidden: true, modelLabel: personalDataLabel)
+
+  lazy var localizationLabel = LocalizationView(returnModel: returnViewModel)
+  lazy var localizationView = ExpandableView(description: "Local do serviço", icon: "ic_map_marker", isHidden: true, modelLabel: localizationLabel)
   
   let divider1 = Divider()
   let divider2 = Divider()
@@ -39,13 +44,6 @@ class ViewController: UIViewController {
   lazy var confirmationView: UIView = {
     let view = UIView()
     view.translatesAutoresizingMaskIntoConstraints = false
-    view.addSubview(closeButton)
-    view.addSubview(confirmationImage)
-    view.addSubview(confirmationLabel)
-    view.addSubview(stateLabel)
-    view.addSubview(downloadImage)
-    view.addSubview(shareImage)
-    
     return view
   }()
   
@@ -104,12 +102,6 @@ class ViewController: UIViewController {
   lazy var dataView: UIView = {
     let view = UIView()
     view.translatesAutoresizingMaskIntoConstraints = false
-    view.addSubview(dataLabel)
-    view.addSubview(dateImage)
-    view.addSubview(dateLabel)
-    view.addSubview(hourImage)
-    view.addSubview(hourLabel)
-    view.addSubview(saveLabel)
     return view
   }()
   
@@ -198,8 +190,22 @@ class ViewController: UIViewController {
     scrollView.addSubview(contentView)
     
     contentView.addSubview(confirmationView)
+
+    confirmationView.addSubview(closeButton)
+    confirmationView.addSubview(confirmationImage)
+    confirmationView.addSubview(confirmationLabel)
+    confirmationView.addSubview(stateLabel)
+    confirmationView.addSubview(downloadImage)
+    confirmationView.addSubview(shareImage)
     
     contentView.addSubview(dataView)
+
+    dataView.addSubview(dataLabel)
+    dataView.addSubview(dateImage)
+    dataView.addSubview(dateLabel)
+    dataView.addSubview(hourImage)
+    dataView.addSubview(hourLabel)
+    dataView.addSubview(saveLabel)
     
     contentView.addSubview(divider1)
     
@@ -219,17 +225,17 @@ class ViewController: UIViewController {
   }
   
   private func applyConstraints() {
-    NSLayoutConstraint.activate([
-      closeButton.topAnchor.constraint(equalTo: confirmationView.topAnchor, constant: 10),
-      closeButton.trailingAnchor.constraint(equalTo: confirmationView.trailingAnchor, constant: -20),
-      closeButton.heightAnchor.constraint(equalToConstant: 50),
-    ])
     
     NSLayoutConstraint.activate([
       confirmationView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
       confirmationView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
       confirmationView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
       confirmationView.heightAnchor.constraint(equalToConstant: 180)
+    ])
+    NSLayoutConstraint.activate([
+      closeButton.topAnchor.constraint(equalTo: confirmationView.topAnchor, constant: 10),
+      closeButton.trailingAnchor.constraint(equalTo: confirmationView.trailingAnchor, constant: -20),
+      closeButton.heightAnchor.constraint(equalToConstant: 50),
     ])
     NSLayoutConstraint.activate([
       confirmationImage.centerYAnchor.constraint(equalTo: confirmationView.centerYAnchor, constant: -10),
@@ -258,7 +264,7 @@ class ViewController: UIViewController {
     ])
     
     NSLayoutConstraint.activate([
-      dataView.topAnchor.constraint(equalTo: confirmationView.bottomAnchor, constant: 10),
+      dataView.topAnchor.constraint(equalTo: confirmationView.bottomAnchor),
       dataView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
       dataView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
       dataView.heightAnchor.constraint(equalToConstant: 140)
@@ -289,28 +295,28 @@ class ViewController: UIViewController {
     ])
     
     NSLayoutConstraint.activate([
-      informationView.topAnchor.constraint(equalTo: dataView.bottomAnchor),
+      informationView.topAnchor.constraint(equalTo: divider1.bottomAnchor),
       informationView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
       informationView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
       informationView.heightAnchor.constraint(greaterThanOrEqualToConstant: 70)
     ])
     
     NSLayoutConstraint.activate([
-      personalDataView.topAnchor.constraint(equalTo: informationView.bottomAnchor),
+      personalDataView.topAnchor.constraint(equalTo: divider2.bottomAnchor),
       personalDataView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
       personalDataView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
       personalDataView.heightAnchor.constraint(greaterThanOrEqualToConstant: 70)
     ])
     
     NSLayoutConstraint.activate([
-      localizationView.topAnchor.constraint(equalTo: personalDataView.bottomAnchor),
+      localizationView.topAnchor.constraint(equalTo: divider3.bottomAnchor),
       localizationView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
       localizationView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
       localizationView.heightAnchor.constraint(greaterThanOrEqualToConstant: 70)
     ])
     
     NSLayoutConstraint.activate([
-      returnButton.topAnchor.constraint(equalTo: localizationView.bottomAnchor, constant: 30),
+      returnButton.topAnchor.constraint(equalTo: divider4.bottomAnchor, constant: 20),
       returnButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
       returnButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
       returnButton.heightAnchor.constraint(equalToConstant: 60)
@@ -318,27 +324,27 @@ class ViewController: UIViewController {
     
     NSLayoutConstraint.activate([
       divider1.topAnchor.constraint(equalTo: dataView.bottomAnchor),
-      divider1.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
       divider1.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
+      divider1.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20)
     ])
     
     
     NSLayoutConstraint.activate([
       divider2.topAnchor.constraint(equalTo: informationView.bottomAnchor),
-      divider2.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
       divider2.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
+      divider2.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20)
     ])
     
     NSLayoutConstraint.activate([
       divider3.topAnchor.constraint(equalTo: personalDataView.bottomAnchor),
-      divider3.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
       divider3.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
+      divider3.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20)
     ])
     
     NSLayoutConstraint.activate([
       divider4.topAnchor.constraint(equalTo: localizationView.bottomAnchor),
-      divider4.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
       divider4.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
+      divider4.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20)
     ])
   }
   
